@@ -1,7 +1,12 @@
-import 'tailwindcss/tailwind.css'
+import "tailwindcss/tailwind.css";
+import { FirebaseProvider } from "../context/firebase";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <FirebaseProvider>
+      <Component {...pageProps} />
+    </FirebaseProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
