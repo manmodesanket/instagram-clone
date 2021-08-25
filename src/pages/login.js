@@ -1,9 +1,8 @@
-import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFirebase } from "../context/firebase";
 
 function Login() {
@@ -48,7 +47,7 @@ function Login() {
       <div className="hidden sm:block bg-white flex w-3/5">
         <img src="/iphone-with-profile.jpg" alt="iPhone with Instagram app" />
       </div>
-      <div className="flex flex-col sm:w-2/5 w-11/12 mx-auto border p-4">
+      <div className="flex flex-col sm:w-2/5 w-11/12 text-center border p-4">
         <img
           src="/logo.png"
           alt="Instagram"

@@ -11,19 +11,19 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_API_ID,
 };
-console.log(firebaseConfig);
+
 const FirebaseContext = createContext(null);
 //export default FirebaseContext;
 
 export const useFirebase = () => useContext(FirebaseContext);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
+const { FieldValue } = firebase.firestore;
 
 export function FirebaseProvider({ children }) {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  } else {
-    firebase.app(); // if already initialized, use that one
-  }
-  const { FieldValue } = firebase.firestore;
   return (
     <FirebaseContext.Provider
       value={{
@@ -35,3 +35,5 @@ export function FirebaseProvider({ children }) {
     </FirebaseContext.Provider>
   );
 }
+
+export { firebase, FieldValue };
