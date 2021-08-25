@@ -1,18 +1,29 @@
-import Head from "next/head";
-import "firebase/firestore";
-import Link from "next/link";
+import React, { useEffect } from "react";
+import { Header, Sidebar, Timeline } from "../component";
+// Challenge
+
+// Render all 3 components
+// Tailwind CSS documentation for grid/grid-cols-3/gap-4
+
+// figure out how to use justify between
+// figure out how to use margin auto
+
+// max-w-screen-lg
+
+// Render Timeline and Sidebar in
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "Instagram";
+  }, []);
+
   return (
-    <div className="container mx-auto">
-      <Head>
-        <title>Home Instagram</title>
-      </Head>
-      <div>
-        <Link href="/login" className="font-bold">
-          <span className="border-b-2 border-blue-400">Login</span>
-        </Link>
+    <main className="w-full bg-gray-200 h-screen">
+      <Header />
+      <div className="w-11/12 sm:w-8/12 mx-auto mt-4 sm:flex">
+        <Timeline />
+        <Sidebar />
       </div>
-    </div>
+    </main>
   );
 }

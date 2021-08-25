@@ -47,7 +47,7 @@ function Login() {
       <div className="hidden sm:block bg-white flex w-3/5">
         <img src="/iphone-with-profile.jpg" alt="iPhone with Instagram app" />
       </div>
-      <div className="flex flex-col sm:w-2/5 w-11/12 text-center border p-4">
+      <div className="flex flex-col mx-auto sm:w-2/5 w-11/12 text-center border p-4">
         <img
           src="/logo.png"
           alt="Instagram"
