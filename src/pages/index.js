@@ -1,29 +1,38 @@
 import React, { useEffect } from "react";
-import { Header, Sidebar, Timeline } from "../component";
-// Challenge
-
-// Render all 3 components
-// Tailwind CSS documentation for grid/grid-cols-3/gap-4
-
-// figure out how to use justify between
-// figure out how to use margin auto
-
-// max-w-screen-lg
-
-// Render Timeline and Sidebar in
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { Header, NavMobile, Sidebar, Timeline } from "../component";
+import { useFirebase } from "../context/firebase";
 
 export default function Home() {
-  useEffect(() => {
-    document.title = "Instagram";
-  }, []);
+  const { loading, user } = useFirebase();
+  const router = useRouter();
 
-  return (
-    <main className="w-full bg-gray-200 h-screen">
-      <Header />
-      <div className="w-11/12 sm:w-8/12 mx-auto mt-4 sm:flex">
-        <Timeline />
-        <Sidebar />
-      </div>
-    </main>
-  );
+  if (loading) {
+    return (
+      <main className="w-full bg-gray-200 h-screen">
+        <Head>
+          <title>Instagram</title>
+        </Head>
+        loading
+      </main>
+    );
+  } else if (user != null || user != undefined) {
+    return (
+      <main className="w-full bg-gray-200 h-screen">
+        <Head>
+          <title>Instagram</title>
+        </Head>
+        <Header />
+        <div className="w-11/12 sm:w-8/12 mx-auto mt-4 sm:flex">
+          <Timeline />
+          <Sidebar />
+        </div>
+        <NavMobile />
+      </main>
+    );
+  } else if (!loading && user == null) {
+    router.push("/login");
+    return null;
+  }
 }

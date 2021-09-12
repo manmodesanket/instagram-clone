@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
@@ -13,22 +13,41 @@ const firebaseConfig = {
 };
 
 const FirebaseContext = createContext(null);
-//export default FirebaseContext;
 
 export const useFirebase = () => useContext(FirebaseContext);
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
   firebase.app(); // if already initialized, use that one
 }
+
 const { FieldValue } = firebase.firestore;
 
 export function FirebaseProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+
+  useEffect(() => {
+    const listener = firebase.auth().onAuthStateChanged((user) => {
+      if (user != null) {
+        setUser(user);
+        setLoadingAuth(false);
+      } else {
+        setUser(null);
+        setLoadingAuth(false);
+      }
+    });
+    return () => listener();
+  }, []);
+
   return (
     <FirebaseContext.Provider
       value={{
         firebase,
         FieldValue,
+        loading: loadingAuth,
+        user,
       }}
     >
       {children}
