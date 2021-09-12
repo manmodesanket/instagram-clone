@@ -1,5 +1,6 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
+import Post from "../Post";
 import useFollowedUsersPhotos from "../../hooks/use-followed-users-photos";
 
 export default function Timeline() {
@@ -9,7 +10,7 @@ export default function Timeline() {
       {!photos ? (
         <Skeleton count={1} width={640} height={500} className="mb-5" />
       ) : (
-        photos.map((content) => <p key={content.docId}>I will be a photo!</p>)
+        photos.map((content) => <Post key={content.docId} content={content} />)
       )}
     </section>
   );
