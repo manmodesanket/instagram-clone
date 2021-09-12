@@ -4,7 +4,7 @@ import { Home, User } from "react-feather";
 
 export default function NavMobile() {
   return (
-    <section className="sm:hidden w-full bg-white absolute bottom-0 h-10 flex items-center justify-around">
+    <section className="sm:hidden w-full bg-white absolute sticky bottom-0 h-10 flex items-center justify-around">
       <div className="w-1/2 h-full flex justify-center items-center">
         <Link href="/" className="font-bold">
           <Home />

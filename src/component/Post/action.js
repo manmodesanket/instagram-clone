@@ -40,7 +40,7 @@ export default function Actions({
               }
             }}
             className={`w-8 mr-4 select-none cursor-pointer ${
-              toggleLiked ? "fill-current text-red-primary" : "text-black-light"
+              toggleLiked ? "fill-current text-red-500" : "text-black-light"
             }`}
           />
         </div>
