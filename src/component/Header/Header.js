@@ -1,8 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { Home, User, PlusSquare } from "react-feather";
+import useUser from "../../hooks/use-user";
 
 export default function Header() {
+  const { user: activeUser } = useUser();
+
   return (
     <header className="w-full bg-white h-12 flex items-center border-b border-gray-300">
       <div className="w-8/12 mx-auto flex justify-center ">
@@ -23,7 +26,10 @@ export default function Header() {
             </Link>
           </div>
           <div className="w-1/2 h-full flex justify-center items-center">
-            <Link href="/profile" className="font-bold">
+            <Link
+              href={`/profile/${activeUser.username}`}
+              className="font-bold"
+            >
               <User />
             </Link>
           </div>

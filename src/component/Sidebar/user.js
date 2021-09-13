@@ -7,7 +7,7 @@ const User = ({ username, fullName }) =>
     <Skelton count={1} height={61} />
   ) : (
     <Link
-      href={`/p/${username}`}
+      href={`/profile/${username}`}
       className="grid grid-cols-4 gap-4 mb-4 items-center"
     >
       <>

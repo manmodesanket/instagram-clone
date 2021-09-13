@@ -25,7 +25,7 @@ const Profile = () => {
   }, [id, router]);
 
   return (
-    <main className="w-full bg-gray-200 h-screen">
+    <main className="w-full">
       <Head>
         <title>Instagram</title>
       </Head>

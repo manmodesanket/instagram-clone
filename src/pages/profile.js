@@ -2,6 +2,7 @@ import router from "next/router";
 import Head from "next/head";
 import React from "react";
 import { useFirebase } from "../context/firebase";
+import { Instagram } from "react-feather";
 import NavMobile from "../component/NavMobile/NavMobile";
 
 export default function Profile() {
@@ -17,7 +18,9 @@ export default function Profile() {
         <Head>
           <title>Profile</title>
         </Head>
-        <p>Loading...</p>
+        <div className="flex items-center justify-center h-screen">
+          <Instagram />
+        </div>
       </div>
     );
   } else if (user !== null) {

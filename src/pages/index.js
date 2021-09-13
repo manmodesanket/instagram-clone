@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { Header, NavMobile, Sidebar, Timeline } from "../component";
 import { useFirebase } from "../context/firebase";
+import { Instagram } from "react-feather";
 
 export default function Home() {
   const { loading, user } = useFirebase();
@@ -12,15 +13,19 @@ export default function Home() {
     return (
       <main className="w-full bg-gray-200 h-screen">
         <Head>
+          <link rel="icon" type="image/png" href="/instagram.png" />
           <title>Instagram</title>
         </Head>
-        loading
+        <div className="flex items-center justify-center h-screen">
+          <Instagram />
+        </div>
       </main>
     );
   } else if (user != null || user != undefined) {
     return (
       <main className="w-full bg-gray-200 h-screen">
         <Head>
+          <link rel="icon" type="image/png" href="/instagram.png" />
           <title>Instagram</title>
         </Head>
         <Header />

@@ -4,13 +4,14 @@ import { useRouter } from "next/router";
 import "firebase/auth";
 import { useState } from "react";
 import { useFirebase } from "../context/firebase";
+import { Instagram } from "react-feather";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassoword] = useState("");
   const [error, setError] = useState("");
 
-  const { firebase } = useFirebase();
+  const { firebase, user, loading } = useFirebase();
   const router = useRouter();
 
   function loginError() {
@@ -39,10 +40,28 @@ function Login() {
     }
   };
 
+  if (loading) {
+    return (
+      <main className="w-full bg-gray-200 h-screen">
+        <Head>
+          <link rel="icon" type="image/png" href="/instagram.png" />
+          <title>Instagram</title>
+        </Head>
+        <div className="flex items-center justify-center h-screen">
+          <Instagram />
+        </div>
+      </main>
+    );
+  } else if (user != null || user != undefined) {
+    router.push("/");
+    return null;
+  }
+
   return (
     <div className="container w-full mx-auto flex max-w-screen-md items-center h-screen">
       <Head>
         <title>Login Instagram</title>
+        <link rel="icon" type="image/png" href="/instagram.png" />
       </Head>
       <div className="hidden sm:block bg-white flex w-3/5">
         <img src="/iphone-with-profile.jpg" alt="iPhone with Instagram app" />

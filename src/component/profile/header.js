@@ -1,5 +1,7 @@
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
+import { useFirebase } from "../../context/firebase";
 import useUser from "../../hooks/use-user";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 
@@ -16,6 +18,8 @@ export default function Header({
   },
 }) {
   const { user } = useUser();
+  const { storage } = useFirebase();
+  const [profilePicture, setProfilePicture] = useState(null);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const activeBtnFollow = user.username && user.username !== username;
 
@@ -32,6 +36,20 @@ export default function Header({
       user.userId
     );
   };
+  useEffect(async () => {
+    const storageRef = storage.ref();
+    try {
+      const url = await storageRef
+        .child(`profile-pictures/${username}.jpg`)
+        .getDownloadURL();
+      setProfilePicture(url);
+    } catch (e) {
+      const url = await storageRef
+        .child(`profile-pictures/default.jpg`)
+        .getDownloadURL();
+      setProfilePicture(url);
+    }
+  }, [user.username]);
 
   useEffect(() => {
     const isLoggedInUserFollowingProfile = async () => {
@@ -48,17 +66,18 @@ export default function Header({
   }, [user.username, profileUserId]);
 
   return (
-    <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
+    <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg mt-8">
       <div className="container flex justify-center">
         <img
-          className="rounded-full h-40 w-40 flex"
-          alt={`${username} profile picture`}
-          src={`/images/avatars/${username}.jpg`}
+          className="rounded-full sm:h-40 sm:w-40 h-20 w-20 flex my-auto"
+          alt={profilePicture}
+          src={profilePicture}
         />
       </div>
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
           <p className="text-2xl mr-4">{username}</p>
+          {username === user.username && <Link href="/edit">Edit Details</Link>}
           {activeBtnFollow && (
             <button
               className="bg-blue-500 font-bold text-sm rounded text-white w-20 h-8"
@@ -74,9 +93,6 @@ export default function Header({
             <Skeleton count={1} width={677} height={24} />
           ) : (
             <>
-              <p className="mr-10">
-                <span className="font-bold">{photosCount}</span> photos
-              </p>
               <p className="mr-10">
                 <span className="font-bold">{followers}</span>{" "}
                 {followers === 1 ? "follower" : "followers"}
