@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import { useFirebase } from "../../context/firebase";
 
 export default function Photos({ photos }) {
   return (
@@ -15,7 +16,7 @@ export default function Photos({ photos }) {
           photos &&
           photos.map((photo) => (
             <div key={photo.docId} className="relative group">
-              <img src={photo.imageSrc} alt={photo.caption} />
+              <Image src={photo.imageSrc} caption={photo.caption} />
             </div>
           ))
         ) : null}
@@ -25,6 +26,23 @@ export default function Photos({ photos }) {
         (photos && photos.length === 0 && (
           <p className="text-center text-2xl">No Photos Yet</p>
         ))}
+    </div>
+  );
+}
+
+function Image({ src, caption }) {
+  const [imageUrl, setImageUrl] = useState(null);
+  const { storage } = useFirebase();
+
+  useEffect(async () => {
+    const storageRef = storage.ref();
+    const url = await storageRef.child(src).getDownloadURL();
+    setImageUrl(url);
+  }, [src]);
+
+  return (
+    <div className="post__img">
+      <img src={imageUrl} alt={caption} />
     </div>
   );
 }

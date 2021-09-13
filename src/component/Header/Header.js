@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Home, User } from "react-feather";
+import { Home, User, PlusSquare } from "react-feather";
 
 export default function Header() {
   return (
@@ -15,6 +15,11 @@ export default function Header() {
           <div className="w-1/2 h-full flex justify-center items-center">
             <Link href="/" className="font-bold">
               <Home />
+            </Link>
+          </div>
+          <div className="w-1/2 h-full flex justify-center items-center">
+            <Link href="/post" className="font-bold">
+              <PlusSquare />
             </Link>
           </div>
           <div className="w-1/2 h-full flex justify-center items-center">

@@ -7,6 +7,7 @@ import Header from "./header";
 export default function Post({ content }) {
   const commentInput = useRef(null);
   const handleFocus = () => commentInput.current.focus();
+
   return (
     <div className="rounded col-span-4 border bg-white mb-16">
       <Header username={content.username} />

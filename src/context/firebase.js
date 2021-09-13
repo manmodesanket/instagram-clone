@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -27,7 +28,7 @@ const { FieldValue } = firebase.firestore;
 export function FirebaseProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
-
+  const storage = firebase.storage();
   useEffect(() => {
     const listener = firebase.auth().onAuthStateChanged((user) => {
       if (user != null) {
@@ -40,7 +41,6 @@ export function FirebaseProvider({ children }) {
     });
     return () => listener();
   }, []);
-
   return (
     <FirebaseContext.Provider
       value={{
@@ -48,6 +48,7 @@ export function FirebaseProvider({ children }) {
         FieldValue,
         loading: loadingAuth,
         user,
+        storage,
       }}
     >
       {children}

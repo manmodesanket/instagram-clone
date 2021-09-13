@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Home, User } from "react-feather";
+import { Home, PlusSquare, User } from "react-feather";
 
 export default function NavMobile() {
   return (
@@ -8,6 +8,11 @@ export default function NavMobile() {
       <div className="w-1/2 h-full flex justify-center items-center">
         <Link href="/" className="font-bold">
           <Home />
+        </Link>
+      </div>
+      <div className="w-1/2 h-full flex justify-center items-center">
+        <Link href="/post" className="font-bold">
+          <PlusSquare />
         </Link>
       </div>
       <div className="w-1/2 h-full flex justify-center items-center">

@@ -1,4 +1,5 @@
 import { firebase, FieldValue } from "../lib/firebase";
+import { v4 as uuidv4 } from "uuid";
 
 export async function isUserFollowingProfile(activeUsername, profileUserId) {
   const result = await firebase
@@ -169,4 +170,16 @@ export async function toggleFollow(
     followingUserId,
     isFollowingProfile
   );
+}
+
+export async function addPostToFireStore({ imageSrc, caption, userId }) {
+  await firebase.firestore().collection("photos").add({
+    imageSrc,
+    caption,
+    dateCreated: Date.now(),
+    photoId: uuidv4(),
+    comments: [],
+    likes: [],
+    userId,
+  });
 }
