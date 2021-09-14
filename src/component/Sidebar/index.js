@@ -9,7 +9,7 @@ export default function Sidebar() {
   } = useUser();
 
   return (
-    <div className="p-4">
+    <div className="mt-14">
       <Suggestions userId={userId} />
     </div>
   );

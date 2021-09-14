@@ -11,7 +11,7 @@ export default function Edit() {
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
   const { user: activeUser } = useUser();
-  const { storage, loading } = useFirebase();
+  const { storage, loading, user } = useFirebase();
   const router = useRouter();
 
   useEffect(async () => {
@@ -72,7 +72,7 @@ export default function Edit() {
         </div>
       </main>
     );
-  } else if (activeUser != null || activeUser != undefined) {
+  } else if (user != null || user != undefined) {
     return (
       <div>
         <Head>
@@ -80,7 +80,7 @@ export default function Edit() {
           <link rel="icon" type="image/png" href="/instagram.png" />
         </Head>
         <Header />
-        <div className="flex flex-col w-full h-screen items-center bg-grey-lighter">
+        <div className="flex flex-col w-full h-screen items-center bg-grey-lighter mt-14">
           <h1 className="text-xl my-2">Edit Details</h1>
           {isFilePicked || fileUrl ? (
             <div className="flex items-center">

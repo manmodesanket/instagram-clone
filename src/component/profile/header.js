@@ -18,10 +18,11 @@ export default function Header({
   },
 }) {
   const { user } = useUser();
-  const { storage } = useFirebase();
+  const { storage, user: activeUser } = useFirebase();
   const [profilePicture, setProfilePicture] = useState(null);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const activeBtnFollow = user.username && user.username !== username;
+  const activeBtnFollow =
+    activeUser && user.username && user.username !== username;
 
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);

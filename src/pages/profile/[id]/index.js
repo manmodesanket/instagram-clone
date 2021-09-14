@@ -25,7 +25,7 @@ const Profile = () => {
   }, [id, router]);
 
   return (
-    <main className="w-full h-screen">
+    <main className="w-full h-screen mt-14">
       <Head>
         <title>Instagram</title>
       </Head>

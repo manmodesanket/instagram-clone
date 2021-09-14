@@ -1,13 +1,14 @@
 import React from "react";
 import Link from "next/link";
-import { Home, User, PlusSquare } from "react-feather";
+import { Home, User, PlusSquare, LogOut } from "react-feather";
 import useUser from "../../hooks/use-user";
+import { useFirebase } from "../../context/firebase";
 
 export default function Header() {
   const { user: activeUser } = useUser();
-
+  const { firebase, user } = useFirebase();
   return (
-    <header className="w-full bg-white h-12 flex items-center border-b border-gray-300">
+    <header className="w-full fixed top-0 bg-white h-12 flex items-center border-b border-gray-300 z-10">
       <div className="w-8/12 mx-auto flex justify-center ">
         <figure className="sm:w-8/12 h-8">
           <Link href="/">
@@ -33,6 +34,11 @@ export default function Header() {
               <User />
             </Link>
           </div>
+          {user !== null && (
+            <div className="w-1/2 h-full flex justify-center items-center cursor-pointer">
+              <LogOut onClick={() => firebase.auth().signOut()} />
+            </div>
+          )}
         </div>
       </div>
     </header>

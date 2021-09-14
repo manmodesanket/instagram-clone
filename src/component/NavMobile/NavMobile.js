@@ -5,10 +5,10 @@ import useUser from "../../hooks/use-user";
 import { useFirebase } from "../../context/firebase";
 
 export default function NavMobile() {
-  const { firebase } = useFirebase();
+  const { firebase, user } = useFirebase();
   const { user: activeUser } = useUser();
   return (
-    <section className="sm:hidden w-full bg-white fixed bottom-0 h-10 flex items-center justify-around">
+    <section className="sm:hidden w-full bg-white fixed bottom-0 h-10 flex items-center justify-around z-10">
       <div className="w-1/2 h-full flex justify-center items-center">
         <Link href="/" className="font-bold">
           <Home />
@@ -24,7 +24,8 @@ export default function NavMobile() {
           <User />
         </Link>
       </div>
-      <div className="w-1/2 h-full flex justify-center items-center">
+
+      <div className="w-1/2 h-full flex justify-center items-center cursor-pointer">
         <LogOut onClick={() => firebase.auth().signOut()} />
       </div>
     </section>

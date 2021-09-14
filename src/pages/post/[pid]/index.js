@@ -11,7 +11,7 @@ import { Header, NavMobile } from "../../../component";
 export default function PostPage() {
   const router = useRouter();
   const { pid } = router.query;
-  const { loading, firebase } = useFirebase();
+  const { loading, firebase, user: activeUser } = useFirebase();
   const { user } = useUser();
   const [dataLoading, setDataLoading] = useState(true);
   const [photo, setPhoto] = useState(null);
@@ -23,21 +23,22 @@ export default function PostPage() {
         .collection("photos")
         .where("photoId", "==", pid)
         .get();
-      console.log(result.docs);
+
       const photoDetails = {
         ...result.docs[0].data(),
         docId: result.docs[0].id,
       };
+
       const postUser = await getUserByUserId(photoDetails.userId);
       const { username } = postUser[0];
       const photo = { ...photoDetails, username };
       setPhoto(photo);
       setDataLoading(false);
     }
-    if (pid) {
+    if (pid && !loading && user != null && user != undefined) {
       photoDetails();
     }
-  }, [pid]);
+  }, [pid, loading, user]);
 
   if (loading || dataLoading) {
     return (
@@ -51,9 +52,9 @@ export default function PostPage() {
         </div>
       </main>
     );
-  } else if ((user != null || user != undefined) && !dataLoading) {
+  } else if ((activeUser != null || activeUser != undefined) && !dataLoading) {
     return (
-      <div className="h-screen w-full relative">
+      <div className="h-screen w-full relative mt-16">
         <Head>
           <link rel="icon" type="image/png" href="/instagram.png" />
           <title>Instagram</title>
@@ -65,5 +66,8 @@ export default function PostPage() {
         <NavMobile />
       </div>
     );
+  } else if (!loading) {
+    router.push("/login");
+    return null;
   }
 }
