@@ -16,7 +16,11 @@ export default function Photos({ photos }) {
           photos &&
           photos.map((photo) => (
             <div key={photo.docId} className="relative group">
-              <Image src={photo.imageSrc} caption={photo.caption} />
+              <Image
+                src={photo.imageSrc}
+                caption={photo.caption}
+                id={photo.photoId}
+              />
             </div>
           ))
         ) : null}
@@ -30,7 +34,7 @@ export default function Photos({ photos }) {
   );
 }
 
-function Image({ src, caption }) {
+function Image({ src, caption, id }) {
   const [imageUrl, setImageUrl] = useState(null);
   const { storage } = useFirebase();
 
@@ -42,7 +46,9 @@ function Image({ src, caption }) {
 
   return (
     <div className="post__img">
-      <img src={imageUrl} alt={caption} />
+      <a href={`/post/${id}`}>
+        <img src={imageUrl} alt={caption} />
+      </a>
     </div>
   );
 }

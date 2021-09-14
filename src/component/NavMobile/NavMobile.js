@@ -1,10 +1,14 @@
 import React from "react";
 import Link from "next/link";
-import { Home, PlusSquare, User } from "react-feather";
+import { Home, LogOut, PlusSquare, User } from "react-feather";
+import useUser from "../../hooks/use-user";
+import { useFirebase } from "../../context/firebase";
 
 export default function NavMobile() {
+  const { firebase } = useFirebase();
+  const { user: activeUser } = useUser();
   return (
-    <section className="sm:hidden w-full bg-white absolute sticky bottom-0 h-10 flex items-center justify-around">
+    <section className="sm:hidden w-full bg-white fixed bottom-0 h-10 flex items-center justify-around">
       <div className="w-1/2 h-full flex justify-center items-center">
         <Link href="/" className="font-bold">
           <Home />
@@ -16,9 +20,12 @@ export default function NavMobile() {
         </Link>
       </div>
       <div className="w-1/2 h-full flex justify-center items-center">
-        <Link href="/profile" className="font-bold">
+        <Link href={`/profile/${activeUser.username}`} className="font-bold">
           <User />
         </Link>
+      </div>
+      <div className="w-1/2 h-full flex justify-center items-center">
+        <LogOut onClick={() => firebase.auth().signOut()} />
       </div>
     </section>
   );

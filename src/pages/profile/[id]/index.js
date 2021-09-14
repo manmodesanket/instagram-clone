@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
-import { Header } from "../../../component";
+import { Header, NavMobile } from "../../../component";
 import { getUserByUsername } from "../../../services/firebase";
 import * as ROUTES from "../../../constants/routes";
 import UserProfile from "../../../component/profile";
@@ -25,7 +25,7 @@ const Profile = () => {
   }, [id, router]);
 
   return (
-    <main className="w-full">
+    <main className="w-full h-screen">
       <Head>
         <title>Instagram</title>
       </Head>
@@ -35,6 +35,7 @@ const Profile = () => {
           <UserProfile username={id} />
         </div>
       )}
+      <NavMobile />
     </main>
   );
 };

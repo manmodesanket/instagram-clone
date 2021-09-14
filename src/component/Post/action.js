@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { Heart } from "react-feather";
 import { useFirebase } from "../../context/firebase";
 
-export default function Actions({
-  docId,
-  totalLikes,
-  likedPhoto,
-  handleFocus,
-}) {
+export default function Actions({ docId, totalLikes, likedPhoto }) {
   const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useFirebase();
