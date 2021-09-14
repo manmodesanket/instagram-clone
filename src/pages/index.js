@@ -23,7 +23,7 @@ export default function Home() {
     );
   } else if (user != null || user != undefined) {
     return (
-      <main className="w-full bg-gray-200 h-screen">
+      <main className="w-full h-screen">
         <Head>
           <link rel="icon" type="image/png" href="/instagram.png" />
           <title>Instagram</title>

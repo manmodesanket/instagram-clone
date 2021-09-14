@@ -11,7 +11,7 @@ export default function Post() {
   const [isFilePicked, setIsFilePicked] = useState(false);
   const [fileUrl, setFileUrl] = useState(null);
   const [caption, setCaption] = useState("");
-  const { storage, user } = useFirebase();
+  const { storage, user, loading } = useFirebase();
   const { user: activeUser } = useUser();
 
   const changeHandler = (e) => {

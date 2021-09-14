@@ -64,7 +64,7 @@ export default function Edit() {
     return (
       <main className="w-full bg-gray-200 h-screen">
         <Head>
-          <title>Instagram</title>
+          <title>Edit Instagram</title>
           <link rel="icon" type="image/png" href="/instagram.png" />
         </Head>
         <div className="flex items-center justify-center h-screen">

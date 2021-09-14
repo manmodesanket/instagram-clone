@@ -45,7 +45,7 @@ function Login() {
       <main className="w-full bg-gray-200 h-screen">
         <Head>
           <link rel="icon" type="image/png" href="/instagram.png" />
-          <title>Instagram</title>
+          <title>Login Instagram</title>
         </Head>
         <div className="flex items-center justify-center h-screen">
           <Instagram />
