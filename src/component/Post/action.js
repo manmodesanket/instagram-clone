@@ -7,6 +7,10 @@ export default function Actions({ docId, totalLikes, likedPhoto }) {
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useFirebase();
 
+  const {
+    user: { uid: userId = "" },
+  } = useFirebase();
+
   const handleToggleLiked = async () => {
     setToggleLiked((toggleLiked) => !toggleLiked);
     await firebase

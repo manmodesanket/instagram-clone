@@ -1,7 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { getStorage } from "firebase/storage";
 import * as FIREBASE_CONSTANTS from "../constants/firebase";
 
 const firebaseConfig = {

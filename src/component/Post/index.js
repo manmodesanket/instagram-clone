@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import Image from "./image";
 import Actions from "./action";
 import Footer from "./footer";
