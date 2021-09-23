@@ -15,6 +15,14 @@ export default function PostPage() {
   const { user } = useUser();
   const [dataLoading, setDataLoading] = useState(true);
   const [photo, setPhoto] = useState(null);
+  const [postPage, setPostPage] = useState(false);
+
+  useEffect(() => {
+    setPostPage(true);
+    return () => {
+      setPostPage(false);
+    };
+  }, []);
 
   useEffect(async () => {
     async function photoDetails() {
@@ -61,7 +69,7 @@ export default function PostPage() {
         </Head>
         <Header />
         <div className="sm:w-1/2 w-11/12 mx-auto mt-4">
-          <Post content={photo} />
+          <Post content={photo} postPage={postPage} />
         </div>
         <NavMobile />
       </div>

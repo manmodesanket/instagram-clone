@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Heart } from "react-feather";
+import { Heart, MessageCircle } from "react-feather";
 import { useFirebase } from "../../context/firebase";
+import Link from "next/link";
 
-export default function Actions({ docId, totalLikes, likedPhoto }) {
+export default function Actions({ docId, totalLikes, likedPhoto, id }) {
   const [toggleLiked, setToggleLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useFirebase();
@@ -26,8 +27,8 @@ export default function Actions({ docId, totalLikes, likedPhoto }) {
   };
   return (
     <>
-      <div className="flex justify-between p4-">
-        <div className="flex">
+      <div className="flex justify-between">
+        <div className="flex py-1">
           <Heart
             onClick={() => handleToggleLiked((toggleLiked) => !toggleLiked)}
             onKeyDown={(e) => {
@@ -39,9 +40,12 @@ export default function Actions({ docId, totalLikes, likedPhoto }) {
               toggleLiked ? "fill-current text-red-500" : "text-black-light"
             }`}
           />
+          <Link href={`/post/${id}`}>
+            <MessageCircle className="cursor-pointer" />
+          </Link>
         </div>
       </div>
-      <div className="p-4 py-0">
+      <div className="px-2 py-0">
         <p className="font-bold">
           {likes === 1 ? `${likes} like` : `${likes} likes`}
         </p>
