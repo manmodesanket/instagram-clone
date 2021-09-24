@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFirebase } from "../../context/firebase";
 
 export default function AddComment({ docId, comments, setComments }) {
@@ -7,6 +7,12 @@ export default function AddComment({ docId, comments, setComments }) {
   const {
     user: { displayName },
   } = useFirebase();
+
+  const commentRef = useRef(null);
+
+  useEffect(() => {
+    commentRef.current.focus();
+  }, []);
 
   const handleSubmitComment = (event) => {
     event.preventDefault();
@@ -41,6 +47,7 @@ export default function AddComment({ docId, comments, setComments }) {
           name="add-comment"
           placeholder="Add a comment..."
           value={comment}
+          ref={commentRef}
           onChange={(e) => setComment(e.target.value)}
         />
         <button

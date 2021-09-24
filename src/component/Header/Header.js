@@ -12,18 +12,22 @@ export default function Header() {
       <div className="w-8/12 mx-auto flex justify-center ">
         <figure className="sm:w-8/12 h-8">
           <Link href="/">
-            <img src="/logo.png" alt="Instagram" className="h-full" />
+            <img
+              src="/logo.png"
+              alt="Instagram"
+              className="h-full cursor-pointer"
+            />
           </Link>
         </figure>
         <div className="hidden w-4/12 sm:flex">
           <div className="w-1/2 h-full flex justify-center items-center">
             <Link href="/" className="font-bold">
-              <Home />
+              <Home className="cursor-pointer" />
             </Link>
           </div>
           <div className="w-1/2 h-full flex justify-center items-center">
             <Link href="/post" className="font-bold">
-              <PlusSquare />
+              <PlusSquare className="cursor-pointer" />
             </Link>
           </div>
           <div className="w-1/2 h-full flex justify-center items-center">
@@ -31,7 +35,7 @@ export default function Header() {
               href={`/profile/${activeUser.username}`}
               className="font-bold"
             >
-              <User />
+              <User className="cursor-pointer" />
             </Link>
           </div>
           {user !== null && (

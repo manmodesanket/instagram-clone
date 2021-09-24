@@ -26,7 +26,7 @@ export default function SuggestedProfile({
     <div className="flex flex-row items-center align-items justify-between">
       <div className="flex items-center justify-between">
         <Link href={`/profile/${username}`}>
-          <p className="font-bold text-sm">{username}</p>
+          <p className="font-bold text-sm cursor-pointer">{username}</p>
         </Link>
       </div>
       <div className="flex">
