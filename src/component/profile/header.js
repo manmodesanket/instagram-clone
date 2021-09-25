@@ -3,7 +3,11 @@ import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useFirebase } from "../../context/firebase";
 import useUser from "../../hooks/use-user";
-import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
+import {
+  isUserFollowingProfile,
+  toggleFollow,
+  getProfileUrl,
+} from "../../services/firebase";
 
 export default function Header({
   photosCount,
@@ -39,17 +43,8 @@ export default function Header({
   };
   useEffect(async () => {
     const storageRef = storage.ref();
-    try {
-      const url = await storageRef
-        .child(`profile-pictures/${username}.jpg`)
-        .getDownloadURL();
-      setProfilePicture(url);
-    } catch (e) {
-      const url = await storageRef
-        .child(`profile-pictures/default.jpg`)
-        .getDownloadURL();
-      setProfilePicture(url);
-    }
+    let url = getProfileUrl(username, storageRef);
+    url.then((data) => setProfilePicture(data));
   }, [user.username]);
 
   useEffect(() => {

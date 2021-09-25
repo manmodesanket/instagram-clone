@@ -5,7 +5,7 @@ export async function isUserFollowingProfile(activeUsername, profileUserId) {
   const result = await firebase
     .firestore()
     .collection("users")
-    .where("username", "==", activeUsername) // karl (active logged in user)
+    .where("username", "==", activeUsername)
     .where("following", "array-contains", profileUserId)
     .get();
 
@@ -182,4 +182,26 @@ export async function addPostToFireStore({ imageSrc, caption, userId }) {
     likes: [],
     userId,
   });
+}
+
+export async function getProfileUrl(username, storageRef) {
+  let url = "";
+  try {
+    url = await storageRef
+      .child(`profile-pictures/${username}.jpg`)
+      .getDownloadURL();
+  } catch (e) {
+    url = await storageRef
+      .child(`profile-pictures/default.jpg`)
+      .getDownloadURL();
+  }
+  return url;
+}
+
+export async function getImageUrl(src, storageRef) {
+  let url = "";
+  try {
+    url = await storageRef.child(src).getDownloadURL();
+  } catch (e) {}
+  return url;
 }

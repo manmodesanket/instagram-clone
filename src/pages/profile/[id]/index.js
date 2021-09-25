@@ -28,6 +28,7 @@ const Profile = () => {
     <main className="w-full h-screen mt-14">
       <Head>
         <title>Instagram</title>
+        <link rel="icon" type="image/png" href="/instagram.png" />
       </Head>
       <Header />
       {userExists && (

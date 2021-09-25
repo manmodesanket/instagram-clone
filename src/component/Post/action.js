@@ -4,7 +4,7 @@ import { useFirebase } from "../../context/firebase";
 import Link from "next/link";
 
 export default function Actions({ docId, totalLikes, likedPhoto, id }) {
-  const [toggleLiked, setToggleLiked] = useState(likedPhoto);
+  const [isLiked, setIsLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useFirebase();
 
@@ -13,31 +13,31 @@ export default function Actions({ docId, totalLikes, likedPhoto, id }) {
   } = useFirebase();
 
   const handleToggleLiked = async () => {
-    setToggleLiked((toggleLiked) => !toggleLiked);
+    setIsLiked((toggleLiked) => !toggleLiked);
     await firebase
       .firestore()
       .collection("photos")
       .doc(docId)
       .update({
-        likes: toggleLiked
+        likes: isLiked
           ? FieldValue.arrayRemove(userId)
           : FieldValue.arrayUnion(userId),
       });
-    setLikes((likes) => (toggleLiked ? likes - 1 : likes + 1));
+    setLikes((likes) => (isLiked ? likes - 1 : likes + 1));
   };
   return (
     <>
       <div className="flex justify-between">
         <div className="flex py-1">
           <Heart
-            onClick={() => handleToggleLiked((toggleLiked) => !toggleLiked)}
+            onClick={handleToggleLiked}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                handleToggleLiked((toggleLiked) => !toggleLiked);
+                handleToggleLiked();
               }
             }}
             className={`w-8 mr-4 select-none cursor-pointer ${
-              toggleLiked ? "fill-current text-red-500" : "text-black-light"
+              isLiked ? "fill-current text-red-500" : "text-black-light"
             }`}
           />
           <Link href={`/post/${id}`}>

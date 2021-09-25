@@ -8,7 +8,7 @@ import Comments from "./comment";
 
 export default function Post({ content, postPage = false }) {
   return (
-    <div className="rounded col-span-4 border bg-white mb-16">
+    <div className="rounded col-span-4 border bg-white mb-8">
       <Header username={content.username} />
       <Image src={content.imageSrc} caption={content.caption} />
       <Actions

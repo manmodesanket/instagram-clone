@@ -18,7 +18,7 @@ const Suggestions = ({ userId }) => {
 
   return !profiles ? (
     <Skeleton count={1} height={150} className="mt-5" />
-  ) : profiles.length > 0 ? (
+  ) : (
     <div className="flex flex-col">
       <div className="flex items-center align-items justify-between mb-2 mt-2">
         <p className="font-bold text-gray text-sm">Suggestions for you</p>
@@ -35,7 +35,7 @@ const Suggestions = ({ userId }) => {
         ))}
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default memo(Suggestions);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFirebase } from "../../context/firebase";
+import { getImageUrl } from "../../services/firebase";
 
 export default function Image({ src, caption }) {
   const [imageUrl, setImageUrl] = useState(null);
@@ -7,9 +8,11 @@ export default function Image({ src, caption }) {
   const { storage } = useFirebase();
 
   useEffect(async () => {
-    const storageRef = storage.ref();
-    const url = await storageRef.child(src).getDownloadURL();
-    setImageUrl(url);
+    if (src) {
+      const storageRef = storage.ref();
+      let url = getImageUrl(src, storageRef);
+      url.then((data) => setImageUrl(data));
+    }
   }, [src]);
 
   if (src === null) {

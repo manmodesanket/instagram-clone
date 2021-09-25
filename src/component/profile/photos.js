@@ -1,21 +1,24 @@
+import { data } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useFirebase } from "../../context/firebase";
+import { getImageUrl } from "../../services/firebase";
 
 export default function Photos({ photos }) {
   return (
     <div className="border-t border-gray mt-12 pt-4">
       <div className="grid sm:grid-cols-3 grid-cols-2 gap-8 mt-4 mb-12">
-        {!photos ? (
+        {photos.length === 0 ? (
           <>
             {[...new Array(9)].map((_, index) => (
               <Skeleton key={index} count={1} width={320} height={400} />
             ))}
           </>
-        ) : photos && photos.length > 0 ? (
+        ) : (
           photos &&
+          photos.length > 0 &&
           photos.map((photo) => (
-            <div key={photo.docId} className="relative group">
+            <div key={photo.docId}>
               <Image
                 src={photo.imageSrc}
                 caption={photo.caption}
@@ -23,7 +26,7 @@ export default function Photos({ photos }) {
               />
             </div>
           ))
-        ) : null}
+        )}
       </div>
 
       {!photos ||
@@ -38,10 +41,12 @@ function Image({ src, caption, id }) {
   const [imageUrl, setImageUrl] = useState(null);
   const { storage } = useFirebase();
 
-  useEffect(async () => {
-    const storageRef = storage.ref();
-    const url = await storageRef.child(src).getDownloadURL();
-    setImageUrl(url);
+  useEffect(() => {
+    if (src != null) {
+      const storageRef = storage.ref();
+      let url = getImageUrl(src, storageRef);
+      url.then((data) => setImageUrl(data));
+    }
   }, [src]);
 
   return (

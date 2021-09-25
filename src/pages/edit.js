@@ -5,6 +5,7 @@ import { Header, NavMobile } from "../component";
 import useUser from "../hooks/use-user";
 import { FilePlus, Instagram } from "react-feather";
 import { useFirebase } from "../context/firebase";
+import { getImageUrl } from "../services/firebase";
 
 export default function Edit() {
   const [selectedFile, setSelectedFile] = useState();
@@ -16,7 +17,7 @@ export default function Edit() {
 
   useEffect(async () => {
     const storageRef = storage.ref();
-    if (activeUser != null || activeUser != undefined) {
+    if (activeUser) {
       try {
         const url = await storageRef
           .child(`profile-pictures/${activeUser.username}.jpg`)
@@ -93,7 +94,7 @@ export default function Edit() {
                 <input
                   type="file"
                   className="hidden"
-                  onChange={(e) => changeHandler(e)}
+                  onChange={changeHandler}
                   accept="image/x-png,image/jpeg"
                 />
               </label>
@@ -113,7 +114,7 @@ export default function Edit() {
         <NavMobile />
       </div>
     );
-  } else if (!loading && user == null) {
+  } else {
     router.push("/login");
     return null;
   }
