@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Header, NavMobile, Sidebar, Timeline } from "../component";
 import { useFirebase } from "../context/firebase";
 import { Instagram } from "react-feather";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   const { loading, user } = useFirebase();
@@ -33,6 +34,7 @@ export default function Home() {
           <Timeline />
           <Sidebar />
         </div>
+        <ToastContainer />
         <NavMobile />
       </main>
     );

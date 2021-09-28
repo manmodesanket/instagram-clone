@@ -63,7 +63,7 @@ function Login() {
         <title>Login Instagram</title>
         <link rel="icon" type="image/png" href="/instagram.png" />
       </Head>
-      <div className="hidden sm:block bg-white flex w-3/5">
+      <div className="hidden sm:block bg-white w-3/5">
         <img src="/iphone-with-profile.jpg" alt="iPhone with Instagram app" />
       </div>
       <div className="flex flex-col mx-auto sm:w-2/5 w-11/12 text-center border p-4">

@@ -10,7 +10,6 @@ import {
 } from "../../services/firebase";
 
 export default function Header({
-  photosCount,
   followerCount: followers,
   setFollowerCount,
   username,
@@ -45,6 +44,7 @@ export default function Header({
     const storageRef = storage.ref();
     let url = getProfileUrl(username, storageRef);
     url.then((data) => setProfilePicture(data));
+    () => {};
   }, [user.username]);
 
   useEffect(() => {
@@ -73,7 +73,9 @@ export default function Header({
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
           <p className="text-2xl mr-4">{username}</p>
-          {username === user.username && <Link href="/edit">Edit Details</Link>}
+          {user && username === user.username && (
+            <Link href="/edit">Edit Details</Link>
+          )}
           {activeBtnFollow && (
             <button
               className="bg-blue-500 font-bold text-sm rounded text-white w-20 h-8"

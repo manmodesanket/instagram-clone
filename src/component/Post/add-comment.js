@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useFirebase } from "../../context/firebase";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function AddComment({ docId, comments, setComments }) {
   const [comment, setComment] = useState("");
@@ -20,13 +21,14 @@ export default function AddComment({ docId, comments, setComments }) {
     setComments([{ displayName, comment }, ...comments]);
     setComment("");
 
-    return firebase
+    firebase
       .firestore()
       .collection("photos")
       .doc(docId)
       .update({
         comments: FieldValue.arrayUnion({ displayName, comment }),
       });
+    toast.success("Comment Added");
   };
 
   return (
@@ -61,6 +63,7 @@ export default function AddComment({ docId, comments, setComments }) {
           Post
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 }

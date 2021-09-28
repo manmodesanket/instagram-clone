@@ -5,6 +5,7 @@ import useUser from "../hooks/use-user";
 import { Header, NavMobile } from "../component";
 import { addPostToFireStore } from "../services/firebase";
 import { FilePlus, Instagram } from "react-feather";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Post() {
   const [selectedFile, setSelectedFile] = useState();
@@ -43,7 +44,7 @@ export default function Post() {
         userId: user.uid,
       });
       imageRef.put(selectedFile).then(() => {
-        alert("Image uploaded successfully to Firebase.");
+        toast.success("Photo posted successfully");
       });
     }
   };
@@ -80,7 +81,7 @@ export default function Post() {
           {isFilePicked ? (
             <div>
               <p>Filename: {selectedFile.name}</p>
-              <img src={fileUrl} className="max-w-full mx-auto p-2" />
+              <img src={fileUrl} className="max-w-xl mx-auto p-2" />
               <input
                 type="text"
                 name="caption"
@@ -102,6 +103,7 @@ export default function Post() {
             </button>
           </div>
         </div>
+        <ToastContainer />
         <NavMobile />
       </div>
     );

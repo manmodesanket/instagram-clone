@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Heart, MessageCircle } from "react-feather";
 import { useFirebase } from "../../context/firebase";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function Actions({ docId, totalLikes, likedPhoto, id }) {
   const [isLiked, setIsLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useFirebase();
+  const firstUpdate = useRef(true);
 
   const {
     user: { uid: userId = "" },
@@ -14,6 +16,7 @@ export default function Actions({ docId, totalLikes, likedPhoto, id }) {
 
   const handleToggleLiked = async () => {
     setIsLiked((toggleLiked) => !toggleLiked);
+    let likeFlag = isLiked ? true : false;
     await firebase
       .firestore()
       .collection("photos")
@@ -24,6 +27,11 @@ export default function Actions({ docId, totalLikes, likedPhoto, id }) {
           : FieldValue.arrayUnion(userId),
       });
     setLikes((likes) => (isLiked ? likes - 1 : likes + 1));
+    if (!likeFlag) {
+      toast.success("Photo Liked");
+    } else {
+      toast.success("Photo Disliked");
+    }
   };
   return (
     <>
