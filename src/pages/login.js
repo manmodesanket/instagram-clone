@@ -103,6 +103,15 @@ function Login() {
             Login
           </button>
         </form>
+        <button
+          onClick={() => {
+            setEmail("guest@gmail.com");
+            setPassoword("guest123");
+          }}
+          className="bg-blue-500 text-white w-full rounded h-8 mt-2 font-bold"
+        >
+          Fill Guest Credentials
+        </button>
         <div className="flex justify-center items-center flex-col w-full bg-white p-2 border mt-4 cursor-pointer">
           <p className="text-sm">
             Don't have an account?
