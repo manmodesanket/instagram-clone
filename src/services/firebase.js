@@ -190,7 +190,7 @@ export async function getProfileUrl(username, storageRef) {
     url = await storageRef
       .child(`profile-pictures/${username}.jpg`)
       .getDownloadURL();
-  } catch (e) {
+  } catch {
     url = await storageRef
       .child(`profile-pictures/default.jpg`)
       .getDownloadURL();

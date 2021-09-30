@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useFirebase } from "../context/firebase";
 import useUser from "../hooks/use-user";
@@ -13,6 +14,7 @@ export default function Post() {
   const [fileUrl, setFileUrl] = useState(null);
   const [caption, setCaption] = useState("");
   const { storage, user, loading } = useFirebase();
+  const router = useRouter();
   const { user: activeUser } = useUser();
 
   const changeHandler = (e) => {
@@ -46,6 +48,7 @@ export default function Post() {
       imageRef.put(selectedFile).then(() => {
         toast.success("Photo posted successfully");
       });
+      router.push(`/profile/${activeUser.username}`);
     }
   };
 
@@ -68,16 +71,21 @@ export default function Post() {
         </Head>
         <Header />
         <div className="flex flex-col w-full mt-20 mb-20 items-center justify-center bg-grey-lighter">
-          <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue">
-            <FilePlus />
-            <span className="mt-2 text-base leading-normal">Select a file</span>
-            <input
-              type="file"
-              className="hidden"
-              onChange={(e) => changeHandler(e)}
-              accept="image/x-png,image/jpeg"
-            />
-          </label>
+          {!isFilePicked && (
+            <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue">
+              <FilePlus />
+              <span className="mt-2 text-base leading-normal">
+                Select a file
+              </span>
+              <input
+                type="file"
+                className="hidden"
+                onChange={(e) => changeHandler(e)}
+                accept="image/x-png,image/jpeg"
+              />
+            </label>
+          )}
+
           {isFilePicked ? (
             <div className="w-full sm:w-1/2 sm:mx-auto">
               <p className="text-center">Filename: {selectedFile.name}</p>
@@ -115,7 +123,7 @@ export default function Post() {
             <p className="pt-4">Select a file to show details</p>
           )}
         </div>
-        <ToastContainer />
+
         <NavMobile />
       </div>
     );
