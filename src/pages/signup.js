@@ -12,6 +12,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [signUpLoading, setSignUpLoading] = useState(false);
   const { firebase } = useFirebase();
   const router = useRouter();
 
@@ -29,6 +30,7 @@ export default function SignUp() {
       try {
         const usernameExists = await doesUsernameExist(username);
         if (!usernameExists.length) {
+          setSignUpLoading(true);
           const auth = firebase.auth();
           const createdUserResult = await auth.createUserWithEmailAndPassword(
             email,
@@ -47,6 +49,7 @@ export default function SignUp() {
             followers: [],
             dateCreated: Date.now(),
           });
+          setSignUpLoading(false);
           setUsername("");
           setFullName("");
           setEmail("");
@@ -57,6 +60,7 @@ export default function SignUp() {
           setError("That username is already taken, please try another!");
         }
       } catch (error) {
+        setSignUpLoading(false);
         setUsername("");
         setFullName("");
         setEmail("");
@@ -125,7 +129,7 @@ export default function SignUp() {
             type="submit"
             className="bg-blue-500 text-white w-full rounded h-8 font-bold"
           >
-            Signup
+            {signUpLoading ? "Loading Signup..." : "Signup"}
           </button>
         </form>
         <div className="flex justify-center items-center flex-col w-full bg-white p-2 border mt-4 cursor-pointer">

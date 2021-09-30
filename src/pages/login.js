@@ -10,6 +10,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassoword] = useState("");
   const [error, setError] = useState("");
+  const [loginLoading, setLoginLoading] = useState(false);
 
   const { firebase, user, loading } = useFirebase();
   const router = useRouter();
@@ -19,16 +20,19 @@ function Login() {
   }
 
   function login(email, password) {
+    setLoginLoading(true);
     const auth = firebase.auth();
     auth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
+        setLoginLoading(false);
         setEmail("");
         setPassoword("");
         setError("");
         router.push("/");
       })
       .catch((error) => {
+        setLoginLoading(false);
         setEmail("");
         setPassoword("");
         setError(error.message);
@@ -104,7 +108,7 @@ function Login() {
             type="submit"
             className="bg-blue-500 text-white w-full rounded h-8 font-bold"
           >
-            Login
+            {loginLoading ? "Loading Login..." : "Login"}
           </button>
         </form>
         <button
@@ -115,7 +119,7 @@ function Login() {
           }}
           className="bg-blue-500 text-white w-full rounded h-8 mt-2 font-bold"
         >
-          Guest Login
+          {loginLoading ? "Loading Login..." : "Guest Login"}
         </button>
         <div className="flex justify-center items-center flex-col w-full bg-white p-2 border mt-4 cursor-pointer">
           <p className="text-sm">
