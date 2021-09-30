@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Heart, MessageCircle } from "react-feather";
 import { useFirebase } from "../../context/firebase";
 import Link from "next/link";
@@ -8,7 +8,6 @@ export default function Actions({ docId, totalLikes, likedPhoto, id }) {
   const [isLiked, setIsLiked] = useState(likedPhoto);
   const [likes, setLikes] = useState(totalLikes);
   const { firebase, FieldValue } = useFirebase();
-  const firstUpdate = useRef(true);
 
   const {
     user: { uid: userId = "" },

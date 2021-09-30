@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { Home, User, PlusSquare, LogOut } from "react-feather";
 import useUser from "../../hooks/use-user";
 import { useFirebase } from "../../context/firebase";
+import { ToolTip } from "..";
 
 export default function Header() {
   const { user: activeUser } = useUser();
@@ -24,33 +25,41 @@ export default function Header() {
         </figure>
         <div className="hidden w-4/12 sm:flex">
           <div className="w-1/2 h-full flex justify-center items-center">
-            <Link href="/" className="font-bold">
-              <Home className="cursor-pointer" />
-            </Link>
+            <ToolTip text="Home">
+              <Link href="/" className="font-bold">
+                <Home className="cursor-pointer" />
+              </Link>
+            </ToolTip>
           </div>
           <div className="w-1/2 h-full flex justify-center items-center">
-            <Link href="/post" className="font-bold">
-              <PlusSquare className="cursor-pointer" />
-            </Link>
+            <ToolTip text="Post">
+              <Link href="/post" className="font-bold">
+                <PlusSquare className="cursor-pointer" />
+              </Link>
+            </ToolTip>
           </div>
           {user != null && (
             <div className="w-1/2 h-full flex justify-center items-center">
-              <Link
-                href={`/profile/${activeUser.username}`}
-                className="font-bold"
-              >
-                <User className="cursor-pointer" />
-              </Link>
+              <ToolTip text="Profile">
+                <Link
+                  href={`/profile/${activeUser.username}`}
+                  className="font-bold"
+                >
+                  <User className="cursor-pointer" />
+                </Link>
+              </ToolTip>
             </div>
           )}
           {user !== null && (
             <div className="w-1/2 h-full flex justify-center items-center cursor-pointer">
-              <LogOut
-                onClick={() => {
-                  firebase.auth().signOut();
-                  router.push("/login");
-                }}
-              />
+              <ToolTip text="Logout">
+                <LogOut
+                  onClick={() => {
+                    firebase.auth().signOut();
+                    router.push("/login");
+                  }}
+                />
+              </ToolTip>
             </div>
           )}
         </div>

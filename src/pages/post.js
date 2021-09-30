@@ -67,7 +67,7 @@ export default function Post() {
           <title>Instagram Post</title>
         </Head>
         <Header />
-        <div className="flex flex-col w-full h-screen items-center justify-center bg-grey-lighter">
+        <div className="flex flex-col w-full mt-20 mb-20 items-center justify-center bg-grey-lighter">
           <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue">
             <FilePlus />
             <span className="mt-2 text-base leading-normal">Select a file</span>
@@ -79,9 +79,12 @@ export default function Post() {
             />
           </label>
           {isFilePicked ? (
-            <div>
-              <p>Filename: {selectedFile.name}</p>
-              <img src={fileUrl} className="max-w-xl mx-auto p-2" />
+            <div className="w-full sm:w-1/2 sm:mx-auto">
+              <p className="text-center">Filename: {selectedFile.name}</p>
+              <img
+                src={fileUrl}
+                className="w-full sm:max-w-lg sm:px-4 mx-auto p-2"
+              />
               <input
                 type="text"
                 name="caption"
@@ -90,18 +93,27 @@ export default function Post() {
                 onChange={(e) => setCaption(e.target.value)}
                 className="text-sm w-full mx-auto p-4 h-2 border rounded mb-2"
               />
+              <div className="flex justify-center pt-4">
+                <button
+                  className="bg-blue-500 font-bold text-sm rounded text-white w-20 h-8 mr-4"
+                  onClick={handleSubmission}
+                >
+                  Post
+                </button>
+                <button
+                  className="bg-red-500 font-bold text-sm rounded text-white w-20 h-8"
+                  onClick={() => {
+                    setSelectedFile(null);
+                    setIsFilePicked(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           ) : (
             <p className="pt-4">Select a file to show details</p>
           )}
-          <div className="pt-4">
-            <button
-              className="bg-blue-500 font-bold text-sm rounded text-white w-20 h-8"
-              onClick={handleSubmission}
-            >
-              Post
-            </button>
-          </div>
         </div>
         <ToastContainer />
         <NavMobile />

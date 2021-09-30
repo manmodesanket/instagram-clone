@@ -7,13 +7,17 @@ const Suggestions = ({ userId }) => {
   const [profiles, setProfiles] = useState(null);
 
   useEffect(() => {
+    let isActive = true;
     async function suggestedProfiles() {
       const response = await getSuggestedProfiles(userId);
       setProfiles(response);
     }
-    if (userId) {
+    if (userId && isActive) {
       suggestedProfiles();
     }
+    () => {
+      isActive = false;
+    };
   }, [userId]);
 
   return !profiles ? (

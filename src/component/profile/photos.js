@@ -1,14 +1,13 @@
-import { data } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useFirebase } from "../../context/firebase";
 import { getImageUrl } from "../../services/firebase";
 
-export default function Photos({ photos }) {
+export default function Photos({ photos, loadingPhotos }) {
   return (
     <div className="border-t border-gray mt-12 pt-4">
       <div className="grid sm:grid-cols-3 grid-cols-2 gap-8 mt-4 mb-12">
-        {photos.length === 0 ? (
+        {loadingPhotos && photos.length === 0 ? (
           <>
             {[...new Array(9)].map((_, index) => (
               <Skeleton key={index} count={1} width={320} height={400} />
@@ -42,12 +41,20 @@ function Image({ src, caption, id }) {
   const { storage } = useFirebase();
 
   useEffect(() => {
-    if (src != null) {
+    let isActive = true;
+    if (isActive) {
       const storageRef = storage.ref();
       let url = getImageUrl(src, storageRef);
-      url.then((data) => setImageUrl(data));
+      if (isActive) {
+        url.then((data) => {
+          setImageUrl(data);
+        });
+      }
     }
-  }, [src]);
+    () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <div className="post__img">

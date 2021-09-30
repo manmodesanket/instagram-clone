@@ -18,25 +18,29 @@ function Login() {
     return email === "" || password === "";
   }
 
+  function login(email, password) {
+    const auth = firebase.auth();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        setEmail("");
+        setPassoword("");
+        setError("");
+        router.push("/");
+      })
+      .catch((error) => {
+        setEmail("");
+        setPassoword("");
+        setError(error.message);
+      });
+  }
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (loginError()) {
       setError("Please enter all the fields");
     } else {
-      const auth = firebase.auth();
-      auth
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          setEmail("");
-          setPassoword("");
-          setError("");
-          router.push("/");
-        })
-        .catch((error) => {
-          setEmail("");
-          setPassoword("");
-          setError(error.message);
-        });
+      login(email, password);
     }
   };
 
@@ -107,10 +111,11 @@ function Login() {
           onClick={() => {
             setEmail("guest@gmail.com");
             setPassoword("guest123");
+            login("guest@gmail.com", "guest123");
           }}
           className="bg-blue-500 text-white w-full rounded h-8 mt-2 font-bold"
         >
-          Fill Guest Credentials
+          Guest Login
         </button>
         <div className="flex justify-center items-center flex-col w-full bg-white p-2 border mt-4 cursor-pointer">
           <p className="text-sm">

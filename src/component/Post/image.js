@@ -8,12 +8,20 @@ export default function Image({ src, caption }) {
   const { storage } = useFirebase();
 
   useEffect(async () => {
-    if (src) {
+    let isActive = true;
+    if (isActive) {
       const storageRef = storage.ref();
       let url = getImageUrl(src, storageRef);
-      url.then((data) => setImageUrl(data));
+      url.then((data) => {
+        if (isActive) {
+          setImageUrl(data);
+        }
+      });
     }
-  }, [src]);
+    () => {
+      isActive = false;
+    };
+  }, []);
 
   if (src === null) {
     return <main className="w-full bg-gray-200 h-screen">loading</main>;

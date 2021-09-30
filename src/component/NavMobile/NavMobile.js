@@ -5,7 +5,7 @@ import useUser from "../../hooks/use-user";
 import { useFirebase } from "../../context/firebase";
 
 export default function NavMobile() {
-  const { firebase, user } = useFirebase();
+  const { firebase } = useFirebase();
   const { user: activeUser } = useUser();
   return (
     <section className="sm:hidden w-full bg-white fixed bottom-0 h-10 flex items-center justify-around z-10">

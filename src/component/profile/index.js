@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import Header from "./header";
 import Photos from "./photos";
 import {
@@ -18,8 +18,10 @@ export default function Profile({ username }) {
     reducer,
     initialState
   );
+  const [loadingPhotos, setLoadingPhotos] = useState(true);
 
   useEffect(() => {
+    let isActive = true;
     async function getProfileInfoAndPhotos() {
       const [{ ...user }] = await getUserByUsername(username);
       const photos = await getUserPhotosByUsername(username);
@@ -30,9 +32,16 @@ export default function Profile({ username }) {
         followerCount: user.followers.length,
       });
     }
-    getProfileInfoAndPhotos();
-    () => {};
-  }, [username]);
+    if (isActive) {
+      getProfileInfoAndPhotos().then(() => {
+        setLoadingPhotos(false);
+      });
+    }
+
+    () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <>
@@ -43,7 +52,7 @@ export default function Profile({ username }) {
         setFollowerCount={dispatch}
         username={username}
       />
-      <Photos photos={photosCollection} />
+      <Photos photos={photosCollection} loadingPhotos={loadingPhotos} />
     </>
   );
 }

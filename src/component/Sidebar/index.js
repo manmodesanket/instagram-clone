@@ -5,7 +5,7 @@ import User from "./user";
 
 export default function Sidebar() {
   const {
-    user: { fullName, username, userId },
+    user: { userId },
   } = useUser();
 
   return (

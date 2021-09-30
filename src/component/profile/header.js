@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useFirebase } from "../../context/firebase";
 import useUser from "../../hooks/use-user";
@@ -27,38 +27,63 @@ export default function Header({
   const activeBtnFollow =
     activeUser && user.username && user.username !== username;
 
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
   const handleToggleFollow = async () => {
-    setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
-    setFollowerCount({
-      followerCount: isFollowingProfile ? followers - 1 : followers + 1,
-    });
-    await toggleFollow(
-      isFollowingProfile,
-      user.docId,
-      profileDocId,
-      profileUserId,
-      user.userId
-    );
+    if (mounted.current) {
+      setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
+      setFollowerCount({
+        followerCount: isFollowingProfile ? followers - 1 : followers + 1,
+      });
+      await toggleFollow(
+        isFollowingProfile,
+        user.docId,
+        profileDocId,
+        profileUserId,
+        user.userId
+      );
+    }
   };
   useEffect(async () => {
+    let isActive = true;
     const storageRef = storage.ref();
     let url = getProfileUrl(username, storageRef);
-    url.then((data) => setProfilePicture(data));
-    () => {};
+    url.then((data) => {
+      if (isActive) {
+        setProfilePicture(data);
+      }
+    });
+    () => {
+      isActive = false;
+    };
   }, [user.username]);
 
   useEffect(() => {
+    let isActive = true;
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
         user.username,
         profileUserId
       );
-      setIsFollowingProfile(isFollowing);
+      if (isActive) {
+        setIsFollowingProfile(isFollowing);
+      }
     };
 
-    if (user.username && profileUserId) {
+    if (user.username && profileUserId && isActive) {
       isLoggedInUserFollowingProfile();
     }
+    () => {
+      isActive = false;
+    };
   }, [user.username, profileUserId]);
 
   return (
