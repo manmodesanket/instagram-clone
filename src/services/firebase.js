@@ -58,6 +58,7 @@ export async function getUserFollowedPhotos(userId, followingUserIds) {
       if (photo.likes.includes(userId)) {
         userLikedPhoto = true;
       }
+
       const user = await getUserByUserId(photo.userId);
       const username = user[0].username;
       return { username, ...photo, userLikedPhoto };

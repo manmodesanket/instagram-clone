@@ -29,7 +29,7 @@ export default function Image({ src, caption }) {
 
   return (
     <div className="post__img">
-      <img src={imageUrl} alt={caption} className="mx-auto" />
+      {imageUrl && <img src={imageUrl} alt={caption} className="mx-auto" />}
     </div>
   );
 }

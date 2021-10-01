@@ -6,6 +6,7 @@ import AddComment from "./add-comment";
 export default function Comments({ docId, comments: allComments }) {
   const [comments, setComments] = useState(allComments);
   const { user } = useFirebase();
+
   return (
     <div className="">
       {comments.map((item) => (
