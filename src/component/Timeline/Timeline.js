@@ -18,9 +18,11 @@ export default function Timeline() {
   }, [photos]);
 
   if (loadingPhotos) {
-    <section className="w-full sm:w-8/12 sm:px-4 mt-16">
-      <p className="text-center text-2xl">Loading...</p>
-    </section>;
+    return (
+      <section className="w-full sm:w-8/12 sm:px-4 mt-16">
+        <p className="text-center text-2xl">Loading...</p>
+      </section>
+    );
   }
 
   return (

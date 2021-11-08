@@ -22,7 +22,7 @@ export default function Home() {
         </div>
       </main>
     );
-  } else if (user != null || user != undefined) {
+  } else if (user != null) {
     return (
       <main className="w-full h-screen">
         <Head>

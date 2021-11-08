@@ -10,8 +10,8 @@ export default function useFollowedUsersPhotos() {
   } = useFirebase();
 
   useEffect(() => {
-    setLoadingPhotos(true);
     async function getTimelinePhotos() {
+      setLoadingPhotos(true);
       const followingUserIds = await getUserByUserId(userId);
       if (followingUserIds && followingUserIds[0].following.length > 0) {
         const followedUserPhotos = await getUserFollowedPhotos(
@@ -23,9 +23,9 @@ export default function useFollowedUsersPhotos() {
       } else {
         setPhotos([]);
       }
+      setLoadingPhotos(false);
     }
     getTimelinePhotos();
-    setLoadingPhotos(false);
   }, [userId]);
   return { photos, loadingPhotos };
 }
